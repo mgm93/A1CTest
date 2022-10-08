@@ -16,4 +16,5 @@
     <color name="philippineSilver">#B3B3B3</color>
     <color name="philippineSilverAlpha">#94B3B3B3</color>
     <color name="gunmetal">#2C2E43</color>
+    <color name="base">#3C1EAD</color>
 </resources>

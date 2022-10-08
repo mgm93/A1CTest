@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.mgm.a1ctest.ui.splash.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashFragment_to_manufacturerFragment"
+            app:destination="@id/manufacturerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/manufacturerFragment"
+        android:name="com.mgm.a1ctest.ui.home.manufacturer.ManufacturerFragment"
+        android:label="fragment_manufacturer"
+        tools:layout="@layout/fragment_manufacturer" >
+        <action
+            android:id="@+id/action_manufacturerFragment_to_carTypeFragment"
+            app:destination="@id/carTypeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/carTypeFragment"
+        android:name="com.mgm.a1ctest.ui.home.cartype.CarTypeFragment"
+        android:label="fragment_car_type"
+        tools:layout="@layout/fragment_car_type" >
+        <action
+            android:id="@+id/action_carTypeFragment_to_yearFragment"
+            app:destination="@id/yearFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/yearFragment"
+        android:name="com.mgm.a1ctest.ui.home.year.YearFragment"
+        android:label="fragment_year"
+        tools:layout="@layout/fragment_year" />
+</navigation>
