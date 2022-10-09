@@ -12,6 +12,6 @@ class Repository @Inject constructor(private val apiService: ApiService) {
 
     //Api
     suspend fun getManufacturers( page: Int, pageSize : Int) = apiService.getManufacturers( page = page, pageSize = pageSize)
-    suspend fun getCarTypes(manufacturerId: Int, main_type : Int) = apiService.getCarTypes(manufacturerId = manufacturerId)
-    suspend fun getBuiltDates(manufacturerId: Int, main_type : Int) = apiService.getBuiltDates(manufacturerId = manufacturerId, main_type = main_type)
+    suspend fun getCarTypes(manufacturerId: Int) = apiService.getCarTypes(manufacturerId = manufacturerId)
+    suspend fun getBuiltDates(manufacturerId: Int, main_type : String) = apiService.getBuiltDates(manufacturerId = manufacturerId, main_type = main_type)
 }

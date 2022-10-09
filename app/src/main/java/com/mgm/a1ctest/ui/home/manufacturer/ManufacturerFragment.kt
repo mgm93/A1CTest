@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mgm.a1ctest.databinding.FragmentManufacturerBinding
 import com.mgm.a1ctest.ui.home.manufacturer.adapter.ManufacturerAdapter
@@ -22,7 +23,7 @@ class ManufacturerFragment : Fragment() {
     @Inject
     lateinit var manufacturerAdapter: ManufacturerAdapter
 
-    private val viewModel : ManufacturerViewModel by viewModels()
+    private val viewModel: ManufacturerViewModel by viewModels()
 
 
     override fun onCreateView(
@@ -43,14 +44,22 @@ class ManufacturerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         //InitViews
         binding.apply {
-            viewModel.list.observe(viewLifecycleOwner){
+            viewModel.list.observe(viewLifecycleOwner) { it ->
                 //setData
                 manufacturerAdapter.differ.submitList(it)
                 //init recycler Manufacturers
                 recyclerManufacturers.initRecycler(
-                    LinearLayoutManager(context)
-                    ,manufacturerAdapter
+                    LinearLayoutManager(context), manufacturerAdapter
                 )
+                //click
+                manufacturerAdapter.setOmItemClickListener { pair ->
+                    val direction =
+                        ManufacturerFragmentDirections.actionManufacturerFragmentToCarTypeFragment(
+                            pair.first,
+                            pair.second
+                        )
+                    findNavController().navigate(direction)
+                }
             }
         }
     }

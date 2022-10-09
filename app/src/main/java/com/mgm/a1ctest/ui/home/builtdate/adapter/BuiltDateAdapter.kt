@@ -1,4 +1,4 @@
-package com.mgm.a1ctest.ui.home.manufacturer.adapter
+package com.mgm.a1ctest.ui.home.builtdate.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -12,18 +12,18 @@ import javax.inject.Inject
  * Created by Majid-Golmoradi on 10/9/2022.
  * Email: golmoradi.majid@gmail.com
  */
-class ManufacturerAdapter @Inject constructor(): RecyclerView.Adapter<ManufacturerAdapter.ViewHolder>() {
+class BuiltDateAdapter @Inject constructor(): RecyclerView.Adapter<BuiltDateAdapter.ViewHolder>() {
     //Binding
     private lateinit var binding : ItemManufacturerBinding
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): ManufacturerAdapter.ViewHolder {
+    ): BuiltDateAdapter.ViewHolder {
         binding = ItemManufacturerBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return ViewHolder()
     }
 
-    override fun onBindViewHolder(holder: ManufacturerAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: BuiltDateAdapter.ViewHolder, position: Int) {
         holder.bind(differ.currentList[position])
     }
 

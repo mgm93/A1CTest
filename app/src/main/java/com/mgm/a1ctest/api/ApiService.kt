@@ -29,7 +29,7 @@ interface ApiService {
     suspend fun getBuiltDates(
         @Query("wa_key") wa_key: String = Constants.API_KEY,
         @Query("manufacturer") manufacturerId: Int,
-        @Query("main-type") main_type: Int
+        @Query("main-type") main_type: String
     ): Response<ResponseWkda>
 
 }
