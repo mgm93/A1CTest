@@ -34,7 +34,7 @@
     </fragment>
     <fragment
         android:id="@+id/yearFragment"
-        android:name="com.mgm.a1ctest.ui.home.year.YearFragment"
+        android:name="com.mgm.a1ctest.ui.home.builtdate.BuiltDateFragment"
         android:label="fragment_year"
-        tools:layout="@layout/fragment_year" />
+        tools:layout="@layout/fragment_built_date" />
 </navigation>
