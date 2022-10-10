@@ -5,12 +5,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mgm.a1ctest.databinding.FragmentManufacturerBinding
+import com.mgm.a1ctest.paging.LoadMoreAdapter
 import com.mgm.a1ctest.ui.home.manufacturer.adapter.ManufacturerAdapter
-import com.mgm.a1ctest.utils.initRecycler
 import com.mgm.a1ctest.viewmodel.ManufacturerViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -34,33 +37,48 @@ class ManufacturerFragment : Fragment() {
         return binding.root
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        //Call Api
-        viewModel.getManufacturer()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //InitViews
         binding.apply {
-            viewModel.list.observe(viewLifecycleOwner) { it ->
-                //setData
-                manufacturerAdapter.differ.submitList(it)
-                //init recycler Manufacturers
-                recyclerManufacturers.initRecycler(
-                    LinearLayoutManager(context), manufacturerAdapter
-                )
-                //click
-                manufacturerAdapter.setOmItemClickListener { pair ->
-                    val direction =
-                        ManufacturerFragmentDirections.actionManufacturerFragmentToCarTypeFragment(
-                            pair.first,
-                            pair.second
-                        )
-                    findNavController().navigate(direction)
+            //Load data
+            lifecycleScope.launchWhenCreated {
+                viewModel.list.collect {
+                    manufacturerAdapter.submitData(it)
                 }
             }
+            //Loading
+            lifecycleScope.launchWhenCreated {
+                manufacturerAdapter.loadStateFlow.collect {
+                    val state = it.refresh
+
+                    manufacturerLoading.isVisible = state is LoadState.Loading
+                }
+            }
+            //RecyclerView
+            recyclerManufacturers.apply {
+                layoutManager = LinearLayoutManager(context)
+                adapter = manufacturerAdapter
+            }
+            //SwipeRefresh
+            movieSwipe.setOnRefreshListener {
+                movieSwipe.isRefreshing = false
+                manufacturerAdapter.refresh()
+            }
+            //Load more
+            recyclerManufacturers.adapter = manufacturerAdapter.withLoadStateFooter(
+                LoadMoreAdapter { manufacturerAdapter.retry() }
+            )
+            //click
+            manufacturerAdapter.setOmItemClickListener { pair ->
+                val direction =
+                    ManufacturerFragmentDirections.actionManufacturerFragmentToCarTypeFragment(
+                        pair.first,
+                        pair.second
+                    )
+                findNavController().navigate(direction)
+            }
+
         }
     }
 }

@@ -1,11 +1,13 @@
 package com.mgm.a1ctest.viewmodel
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.cachedIn
+import com.mgm.a1ctest.paging.ManufacturerPagingSource
 import com.mgm.a1ctest.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -15,15 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ManufacturerViewModel @Inject constructor(private val repository:Repository): ViewModel() {
 
-    val list = MutableLiveData<List<Pair<String, String>>>()
-
-
-    fun getManufacturer()= viewModelScope.launch {
-        val res = repository.getManufacturers(0,15)
-        if (res.isSuccessful){
-            /*val map = res.body()!!.wkda
-            val list = ArrayList<Pair<String, String>>(map.keys,map.values)*/
-            list.postValue(res.body()!!.wkda.toList())
-        }
-    }
+    val list = Pager(PagingConfig(1)){
+        ManufacturerPagingSource(repository)
+    }.flow.cachedIn(viewModelScope)
 }

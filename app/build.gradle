@@ -7,12 +7,12 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.mgm.a1ctest"
         minSdk 21
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -53,8 +53,12 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
     //Lifecycle
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.0-alpha01")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0-alpha01")
+    //Lifecycle
+//    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0-alpha02"
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.0-alpha02'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.0-alpha02'
+    implementation 'androidx.activity:activity-ktx:1.6.0'
     //datastore
     implementation "androidx.datastore:datastore-preferences:1.0.0"
     //hilt
@@ -79,6 +83,7 @@ dependencies {
     implementation 'io.coil-kt:coil:1.4.0'
     //Dynamic sizes
     implementation 'com.github.MrNouri:DynamicSizes:1.0'
-    //other
-    implementation 'me.relex:circleindicator:2.1.6'
+    //Paging
+    implementation "androidx.paging:paging-runtime:3.1.1"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01"
 }
