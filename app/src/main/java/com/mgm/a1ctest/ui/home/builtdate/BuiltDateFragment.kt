@@ -1,6 +1,7 @@
 package com.mgm.a1ctest.ui.home.builtdate
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -87,24 +88,28 @@ class BuiltDateFragment : Fragment() {
             viewModel.listHist.observe(viewLifecycleOwner){
                 //set date to history adapter
                 builtDateHistoryAdapter.differ.submitList(it)
+                Log.e("MGMRec", "listHist:${it.size}")
                 //init history recycler
                 recyclerHistory.initRecycler(
                     LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL,false)
                     ,builtDateHistoryAdapter
                 )
             }
+            //Click History
             builtDateHistoryAdapter.setOnItemClickListener {
                 viewModel.getBuiltDates(it.mnfKey.toInt(), it.carType)
             }
+            //Click Delete History
             builtDateHistoryAdapter.setOnItemDeleteClickListener {
+                viewModel.deleteHist(it)
 
             }
             //Empty History
             viewModel.emptyHist.observe(viewLifecycleOwner){
                 if (it){
-                    layHistory.showInvisible(true)
-                }else{
                     layHistory.showInvisible(false)
+                }else{
+                    layHistory.showInvisible(true)
                 }
             }
         }

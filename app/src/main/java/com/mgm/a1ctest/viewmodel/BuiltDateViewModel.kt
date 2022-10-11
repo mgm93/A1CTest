@@ -35,8 +35,8 @@ class BuiltDateViewModel @Inject constructor(private val repository: Repository)
 
         val res = repository.getAllHist()
         if (res.isNotEmpty()) {
-            listHist.postValue(res)
             emptyHist.postValue(false)
+            listHist.postValue(res)
         } else
             emptyHist.postValue(true)
 
@@ -46,12 +46,11 @@ class BuiltDateViewModel @Inject constructor(private val repository: Repository)
         val exist = repository.existInHist(histModel.mnfName, histModel.carType)
         if (!exist) {
             repository.insertHist(histModel)
-            emptyHist.postValue(false)
-        }else{
-            emptyHist.postValue(true)
+            getAllHistory()
         }
     }
     fun deleteHist(histModel: HistModel) = viewModelScope.launch {
-        val exist = repository.deleteHist(histModel)
+        repository.deleteHist(histModel)
+        getAllHistory()
     }
 }

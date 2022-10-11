@@ -15,10 +15,10 @@ import javax.inject.Inject
 @HiltViewModel
 class CarTypeViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
 
-    val list = MutableLiveData<List<Pair<String, String>>>()
+    val list = MutableLiveData<List<Pair<String, String>>?>()
     val emptyList = MutableLiveData<Boolean>()
     val isLoading = MutableLiveData<Boolean>()
-    lateinit var mainList : List<Pair<String, String>>
+    private var mainList: List<Pair<String, String>>? = emptyList()
 
 
     fun getCarTypes(mnfKey: Int) = viewModelScope.launch {
@@ -39,14 +39,14 @@ class CarTypeViewModel @Inject constructor(private val repository: Repository) :
 
     fun search(str: String) = viewModelScope.launch {
         val schList = mainList.let {
-            it.filter { item -> item.second.contains(str) }
+            it?.filter { item -> item.second.contains(str) }
         }
-        if (schList.isNotEmpty()) {
+        if (!schList.isNullOrEmpty()) {
             emptyList.postValue(false)
-            if (schList.size == mainList.size)
+            if (schList.size == mainList?.size)
                 list.postValue(mainList)
             else list.postValue(schList)
-        }else{
+        } else {
             emptyList.postValue(true)
         }
 

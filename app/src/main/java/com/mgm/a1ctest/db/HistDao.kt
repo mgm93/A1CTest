@@ -1,6 +1,5 @@
 package com.mgm.a1ctest.db
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.mgm.a1ctest.utils.Constants
 
@@ -12,7 +11,7 @@ interface HistDao {
     @Delete
     suspend fun deleteHist(item: HistModel)
 
-    @Query("SELECT * FROM ${Constants.HISTORY_TABLE}")
+    @Query("SELECT * FROM ${Constants.HISTORY_TABLE} ORDER BY id desc")
     fun getAllHistory(): MutableList<HistModel>
 
     @Query("SELECT EXISTS (SELECT 1 FROM  ${Constants.HISTORY_TABLE} WHERE mnfName = :mnfName and carType = :carType)")
