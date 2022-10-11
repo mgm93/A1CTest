@@ -1,6 +1,7 @@
 package com.mgm.a1ctest.ui.home.cartype
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import com.mgm.a1ctest.databinding.FragmentCarTypeBinding
 import com.mgm.a1ctest.ui.home.cartype.adapter.CarTypeAdapter
 import com.mgm.a1ctest.ui.home.manufacturer.ManufacturerFragmentDirections
 import com.mgm.a1ctest.utils.initRecycler
+import com.mgm.a1ctest.utils.showInvisible
 import com.mgm.a1ctest.viewmodel.CarTypeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -70,6 +72,24 @@ class CarTypeFragment : Fragment() {
                             pair.first
                         )
                     findNavController().navigate(direction)
+                }
+            }
+            //Empty History
+            viewModel.emptyList.observe(viewLifecycleOwner){
+                if (it) {
+                    emptyState.showInvisible(true)
+                    recyclerCarTypes.showInvisible(false)
+                }else{
+                    emptyState.showInvisible(false)
+                    recyclerCarTypes.showInvisible(true)
+                }
+            }
+            //loading
+            viewModel.isLoading.observe(viewLifecycleOwner){
+                if (it) {
+                    loading.showInvisible(true)
+                }else{
+                    loading.showInvisible(false)
                 }
             }
         }

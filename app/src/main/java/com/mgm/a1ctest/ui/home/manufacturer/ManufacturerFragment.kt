@@ -81,4 +81,5 @@ class ManufacturerFragment : Fragment() {
 
         }
     }
+
 }

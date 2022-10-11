@@ -27,5 +27,5 @@ class Repository @Inject constructor(private val apiService: ApiService, private
     suspend fun insertHist(entity: HistModel) = dao.saveHist(entity)
     suspend fun deleteHist(entity: HistModel) = dao.deleteHist(entity)
     suspend fun existInHist(mnfName: String, carType: String) = dao.existInHist(mnfName, carType)
-    fun getAllHist() = dao.getAllHistory()
+    suspend fun getAllHist() = dao.getAllHistory()
 }

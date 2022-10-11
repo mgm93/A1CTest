@@ -16,12 +16,21 @@ import javax.inject.Inject
 class CarTypeViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
 
     val list = MutableLiveData<List<Pair<String, String>>>()
-
+    val emptyList = MutableLiveData<Boolean>()
+    val isLoading = MutableLiveData<Boolean>()
 
     fun getCarTypes(mnfKey: Int) = viewModelScope.launch {
+        isLoading.postValue(true)
         val res = repository.getCarTypes(mnfKey)
         if (res.isSuccessful) {
-            list.postValue(res.body()!!.wkda.toList())
+            if (res.body()!!.wkda.toList().isNotEmpty()) {
+                list.postValue(res.body()!!.wkda.toList())
+                emptyList.postValue(false)
+            }else
+                emptyList.postValue(true)
+        }else{
+            emptyList.postValue(true)
         }
+        isLoading.postValue(false)
     }
 }

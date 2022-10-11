@@ -1,7 +1,8 @@
 package com.mgm.a1ctest.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.mgm.a1ctest.R
@@ -30,4 +31,5 @@ class MainActivity : AppCompatActivity() {
     override fun onNavigateUp(): Boolean {
         return navController.navigateUp() || super.onNavigateUp()
     }
+
 }

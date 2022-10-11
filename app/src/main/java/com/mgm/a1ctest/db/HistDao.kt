@@ -13,7 +13,7 @@ interface HistDao {
     suspend fun deleteHist(item: HistModel)
 
     @Query("SELECT * FROM ${Constants.HISTORY_TABLE}")
-    fun getAllHistory(): LiveData<List<HistModel>>
+    fun getAllHistory(): MutableList<HistModel>
 
     @Query("SELECT EXISTS (SELECT 1 FROM  ${Constants.HISTORY_TABLE} WHERE mnfName = :mnfName and carType = :carType)")
     suspend fun existInHist(mnfName: String, carType: String):Boolean
