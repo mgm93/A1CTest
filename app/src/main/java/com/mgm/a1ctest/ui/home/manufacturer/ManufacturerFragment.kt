@@ -1,5 +1,6 @@
 package com.mgm.a1ctest.ui.home.manufacturer
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -57,7 +58,6 @@ class ManufacturerFragment : Fragment() {
             }
             //RecyclerView
             recyclerManufacturers.apply {
-                layoutManager = LinearLayoutManager(context)
                 adapter = manufacturerAdapter
             }
             //SwipeRefresh

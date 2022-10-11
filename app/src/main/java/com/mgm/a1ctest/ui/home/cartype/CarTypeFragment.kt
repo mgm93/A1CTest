@@ -65,9 +65,9 @@ class CarTypeFragment : Fragment() {
                 //setData
                 carTypeAdapter.differ.submitList(it)
                 //init recycler Manufacturers
-                recyclerCarTypes.initRecycler(
-                    LinearLayoutManager(context), carTypeAdapter
-                )
+                recyclerCarTypes.apply {
+                    adapter = carTypeAdapter
+                }
                 //click
                 carTypeAdapter.setOmItemClickListener { pair ->
                     val direction =

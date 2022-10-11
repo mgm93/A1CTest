@@ -18,13 +18,15 @@ import com.mgm.a1ctest.utils.showInvisible
 import com.mgm.a1ctest.viewmodel.BuiltDateViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+
 @AndroidEntryPoint
 class BuiltDateFragment : Fragment() {
     //Binding
-    private lateinit var binding : FragmentBuiltDateBinding
+    private lateinit var binding: FragmentBuiltDateBinding
 
     @Inject
     lateinit var builtDateAdapter: BuiltDateAdapter
+
     @Inject
     lateinit var builtDateHistoryAdapter: BuiltDateHistoryAdapter
 
@@ -35,8 +37,8 @@ class BuiltDateFragment : Fragment() {
     private var mnfKey = ""
     private var mnfName = ""
     private var carType = ""
-    private val args : BuiltDateFragmentArgs by navArgs()
-    private val viewModel : BuiltDateViewModel by viewModels()
+    private val args: BuiltDateFragmentArgs by navArgs()
+    private val viewModel: BuiltDateViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,7 +53,7 @@ class BuiltDateFragment : Fragment() {
         mnfKey = args.mnfKey
         mnfName = args.mnfName
         carType = args.carType
-        if (carType.isNotEmpty()){
+        if (carType.isNotEmpty()) {
             //call builtType
             viewModel.getBuiltDates(mnfKey.toInt(), carType)
             //save to history
@@ -68,31 +70,30 @@ class BuiltDateFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         //InitViews
         binding.apply {
-            viewModel.list.observe(viewLifecycleOwner){
+            viewModel.list.observe(viewLifecycleOwner) {
                 //set date to adapter
                 builtDateAdapter.differ.submitList(it)
-                //init recycler
-                recyclerBuiltDates.initRecycler(LinearLayoutManager(context), builtDateAdapter)
+                //init Built dates recycler
+                recyclerBuiltDates.apply { adapter = builtDateAdapter }
             }
             //Empty list response
-            viewModel.emptyList.observe(viewLifecycleOwner){
-               if (it){
-                   emptyState.showInvisible(true)
-                   recyclerBuiltDates.showInvisible(false)
-               }else{
-                   emptyState.showInvisible(false)
-                   recyclerBuiltDates.showInvisible(true)
-               }
+            viewModel.emptyList.observe(viewLifecycleOwner) {
+                if (it) {
+                    emptyState.showInvisible(true)
+                    recyclerBuiltDates.showInvisible(false)
+                } else {
+                    emptyState.showInvisible(false)
+                    recyclerBuiltDates.showInvisible(true)
+                }
             }
             //History
-            viewModel.listHist.observe(viewLifecycleOwner){
+            viewModel.listHist.observe(viewLifecycleOwner) {
                 //set date to history adapter
                 builtDateHistoryAdapter.differ.submitList(it)
-                Log.e("MGMRec", "listHist:${it.size}")
                 //init history recycler
                 recyclerHistory.initRecycler(
-                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL,false)
-                    ,builtDateHistoryAdapter
+                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false),
+                    builtDateHistoryAdapter
                 )
             }
             //Click History
@@ -105,10 +106,10 @@ class BuiltDateFragment : Fragment() {
 
             }
             //Empty History
-            viewModel.emptyHist.observe(viewLifecycleOwner){
-                if (it){
+            viewModel.emptyHist.observe(viewLifecycleOwner) {
+                if (it) {
                     layHistory.showInvisible(false)
-                }else{
+                } else {
                     layHistory.showInvisible(true)
                 }
             }
