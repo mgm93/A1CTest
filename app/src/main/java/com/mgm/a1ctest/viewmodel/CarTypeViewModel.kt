@@ -18,6 +18,8 @@ class CarTypeViewModel @Inject constructor(private val repository: Repository) :
     val list = MutableLiveData<List<Pair<String, String>>>()
     val emptyList = MutableLiveData<Boolean>()
     val isLoading = MutableLiveData<Boolean>()
+    lateinit var mainList : List<Pair<String, String>>
+
 
     fun getCarTypes(mnfKey: Int) = viewModelScope.launch {
         isLoading.postValue(true)
@@ -26,11 +28,27 @@ class CarTypeViewModel @Inject constructor(private val repository: Repository) :
             if (res.body()!!.wkda.toList().isNotEmpty()) {
                 list.postValue(res.body()!!.wkda.toList())
                 emptyList.postValue(false)
-            }else
+                mainList = res.body()!!.wkda.toList()
+            } else
                 emptyList.postValue(true)
-        }else{
+        } else {
             emptyList.postValue(true)
         }
         isLoading.postValue(false)
+    }
+
+    fun search(str: String) = viewModelScope.launch {
+        val schList = mainList.let {
+            it.filter { item -> item.second.contains(str) }
+        }
+        if (schList.isNotEmpty()) {
+            emptyList.postValue(false)
+            if (schList.size == mainList.size)
+                list.postValue(mainList)
+            else list.postValue(schList)
+        }else{
+            emptyList.postValue(true)
+        }
+
     }
 }

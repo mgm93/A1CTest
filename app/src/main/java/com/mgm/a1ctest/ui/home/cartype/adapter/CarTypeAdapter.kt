@@ -25,6 +25,7 @@ class CarTypeAdapter @Inject constructor(): RecyclerView.Adapter<CarTypeAdapter.
 
     override fun onBindViewHolder(holder: CarTypeAdapter.ViewHolder, position: Int) {
         holder.bind(differ.currentList[position])
+        holder.setIsRecyclable(false)
     }
 
     override fun getItemCount()= differ.currentList.size

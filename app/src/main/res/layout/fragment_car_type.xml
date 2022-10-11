@@ -6,25 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.cartype.CarTypeFragment">
 
-    <!-- Car types Lay-->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layCarTypes"
+    <!--Search box-->
+    <EditText
+        android:id="@+id/edtSearch"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginHorizontal="@dimen/_5mdp"
-        android:layout_marginTop="@dimen/_8mdp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
+        android:background="@color/raisinBlack"
+        android:drawablePadding="@dimen/_5mdp"
+        android:fontFamily="sans-serif-light"
+        android:hint="@string/searchHere"
+        android:padding="@dimen/_10mdp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/philippineSilver"
+        app:drawableStartCompat="@drawable/ic_round_search_24"
+        app:drawableTint="@color/philippineSilver"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="parent">
+        app:layout_constraintTop_toTopOf="parent" />
         <!-- Recycler CarTypes-->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerCarTypes"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/edtSearch"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
         <!--empty list-->
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -36,12 +43,10 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/edtSearch">
 
             <include layout="@layout/empty_list" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!--loading-->
     <ProgressBar

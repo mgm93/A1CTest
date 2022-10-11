@@ -1,19 +1,17 @@
 package com.mgm.a1ctest.ui.home.cartype
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.mgm.a1ctest.R
 import com.mgm.a1ctest.databinding.FragmentCarTypeBinding
 import com.mgm.a1ctest.ui.home.cartype.adapter.CarTypeAdapter
-import com.mgm.a1ctest.ui.home.manufacturer.ManufacturerFragmentDirections
 import com.mgm.a1ctest.utils.initRecycler
 import com.mgm.a1ctest.utils.showInvisible
 import com.mgm.a1ctest.viewmodel.CarTypeViewModel
@@ -23,16 +21,16 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class CarTypeFragment : Fragment() {
     //Binding
-    private lateinit var binding : FragmentCarTypeBinding
+    private lateinit var binding: FragmentCarTypeBinding
 
     @Inject
     lateinit var carTypeAdapter: CarTypeAdapter
 
     //other
-    private var mnfKey=""
+    private var mnfKey = ""
     private var mnfName = ""
-    private val args : CarTypeFragmentArgs by navArgs()
-    private val viewModel : CarTypeViewModel by viewModels()
+    private val args: CarTypeFragmentArgs by navArgs()
+    private val viewModel: CarTypeViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,7 +44,7 @@ class CarTypeFragment : Fragment() {
         super.onCreate(savedInstanceState)
         mnfKey = args.mnfKey
         mnfName = args.mnfName
-        if (mnfKey.isNotEmpty()){
+        if (mnfKey.isNotEmpty()) {
             //call carType
             viewModel.getCarTypes(mnfKey.toInt())
         }
@@ -56,6 +54,13 @@ class CarTypeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         //InitViews
         binding.apply {
+            //Search Box
+            edtSearch.addTextChangedListener {
+                it.let {
+                    viewModel.search(it.toString())
+                }
+            }
+            //service list response
             viewModel.list.observe(viewLifecycleOwner) { it ->
                 //setData
                 carTypeAdapter.differ.submitList(it)
@@ -75,20 +80,20 @@ class CarTypeFragment : Fragment() {
                 }
             }
             //Empty History
-            viewModel.emptyList.observe(viewLifecycleOwner){
+            viewModel.emptyList.observe(viewLifecycleOwner) {
                 if (it) {
                     emptyState.showInvisible(true)
                     recyclerCarTypes.showInvisible(false)
-                }else{
+                } else {
                     emptyState.showInvisible(false)
                     recyclerCarTypes.showInvisible(true)
                 }
             }
             //loading
-            viewModel.isLoading.observe(viewLifecycleOwner){
+            viewModel.isLoading.observe(viewLifecycleOwner) {
                 if (it) {
                     loading.showInvisible(true)
-                }else{
+                } else {
                     loading.showInvisible(false)
                 }
             }
