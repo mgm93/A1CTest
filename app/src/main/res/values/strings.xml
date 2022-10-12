@@ -5,4 +5,7 @@
     <string name="history">History</string>
     <string name="emptyList">Not found record</string>
     <string name="searchHere">Enter type of car</string>
+    <string name="title_manufacturer">Company</string>
+    <string name="title_carType">Model</string>
+    <string name="title_builtDate">Built Date</string>
 </resources>

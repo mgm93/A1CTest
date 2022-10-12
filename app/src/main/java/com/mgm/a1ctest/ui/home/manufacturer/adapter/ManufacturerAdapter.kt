@@ -1,5 +1,7 @@
 package com.mgm.a1ctest.ui.home.manufacturer.adapter
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
@@ -13,9 +15,11 @@ import javax.inject.Inject
 class ManufacturerAdapter @Inject constructor() : PagingDataAdapter<Pair<String,String>, ManufacturerAdapter.ViewHolder>(differCallback) {
 
     private lateinit var binding: ItemManufacturerBinding
+    private lateinit var context : Context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ManufacturerAdapter.ViewHolder {
         binding = ItemManufacturerBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        context = parent.context
         return ViewHolder()
     }
 
@@ -25,9 +29,10 @@ class ManufacturerAdapter @Inject constructor() : PagingDataAdapter<Pair<String,
     }
 
     inner class ViewHolder : RecyclerView.ViewHolder(binding.root){
+        @SuppressLint("SetTextI18n")
         fun bind(item : Pair<String, String>){
             binding.apply {
-                txtData.text = item.second
+                txtData.text = "${context.getString(R.string.title_manufacturer)} : ${item.second}"
                 itemImg.load(R.drawable.logo) {
                     crossfade(true)
                     crossfade(500)

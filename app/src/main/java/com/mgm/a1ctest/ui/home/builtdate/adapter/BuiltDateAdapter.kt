@@ -1,10 +1,13 @@
 package com.mgm.a1ctest.ui.home.builtdate.adapter
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.mgm.a1ctest.R
 import com.mgm.a1ctest.databinding.ItemManufacturerBinding
 import javax.inject.Inject
 
@@ -15,11 +18,14 @@ import javax.inject.Inject
 class BuiltDateAdapter @Inject constructor(): RecyclerView.Adapter<BuiltDateAdapter.ViewHolder>() {
     //Binding
     private lateinit var binding : ItemManufacturerBinding
+    private lateinit var context : Context
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): BuiltDateAdapter.ViewHolder {
         binding = ItemManufacturerBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        context = parent.context
         return ViewHolder()
     }
 
@@ -29,9 +35,10 @@ class BuiltDateAdapter @Inject constructor(): RecyclerView.Adapter<BuiltDateAdap
 
     override fun getItemCount()= differ.currentList.size
     inner class ViewHolder : RecyclerView.ViewHolder(binding.root){
+        @SuppressLint("SetTextI18n")
         fun bind(item : Pair<String, String>){
             binding.apply {
-                txtData.text = item.second
+                txtData.text ="${context.getString(R.string.title_builtDate)} : ${item.second}"
                 //click
                 root.setOnClickListener {
                     onItemClickListener?.let {
