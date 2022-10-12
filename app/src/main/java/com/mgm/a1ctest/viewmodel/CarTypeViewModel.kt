@@ -1,11 +1,10 @@
 package com.mgm.a1ctest.viewmodel
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.mgm.a1ctest.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 /**
@@ -19,7 +18,6 @@ class CarTypeViewModel @Inject constructor(private val repository: Repository) :
     val emptyList = MutableLiveData<Boolean>()
     val isLoading = MutableLiveData<Boolean>()
     private var mainList: List<Pair<String, String>>? = emptyList()
-
 
     fun getCarTypes(mnfKey: Int) = viewModelScope.launch {
         isLoading.postValue(true)
@@ -39,14 +37,21 @@ class CarTypeViewModel @Inject constructor(private val repository: Repository) :
 
     fun search(str: String) = viewModelScope.launch {
         val schList = mainList.let {
-            it?.filter { item -> item.second.contains(str) }
+            it?.filter { item ->
+                (item.second).uppercase(Locale.ROOT).contains(
+                    str.uppercase(
+                        Locale.ROOT
+                    )
+                )
+            }
         }
         if (!schList.isNullOrEmpty()) {
-            emptyList.postValue(false)
-            if (schList.size == mainList?.size)
+            if (schList.size == mainList?.size) {
                 list.postValue(mainList)
-            else list.postValue(schList)
+            }
+            else { list.postValue(schList)}
         } else {
+            list.postValue(null)
             emptyList.postValue(true)
         }
 

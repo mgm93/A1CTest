@@ -3,9 +3,7 @@ package com.mgm.a1ctest.repository
 import com.mgm.a1ctest.api.ApiService
 import com.mgm.a1ctest.db.HistDao
 import com.mgm.a1ctest.db.HistModel
-import com.mgm.a1ctest.di.DatabaseModule
 import javax.inject.Inject
-import javax.inject.Named
 
 /**
  * Created by Majid-Golmoradi on 10/9/2022.
@@ -27,5 +25,5 @@ class Repository @Inject constructor(private val apiService: ApiService, private
     suspend fun insertHist(entity: HistModel) = dao.saveHist(entity)
     suspend fun deleteHist(entity: HistModel) = dao.deleteHist(entity)
     suspend fun existInHist(mnfName: String, carType: String) = dao.existInHist(mnfName, carType)
-    suspend fun getAllHist() = dao.getAllHistory()
+    fun getAllHist() = dao.getAllHistory()
 }

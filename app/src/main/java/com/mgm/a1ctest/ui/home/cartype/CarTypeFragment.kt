@@ -1,5 +1,6 @@
 package com.mgm.a1ctest.ui.home.cartype
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,10 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.mgm.a1ctest.databinding.FragmentCarTypeBinding
 import com.mgm.a1ctest.ui.home.cartype.adapter.CarTypeAdapter
-import com.mgm.a1ctest.utils.initRecycler
 import com.mgm.a1ctest.utils.showInvisible
 import com.mgm.a1ctest.viewmodel.CarTypeViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,6 +49,7 @@ class CarTypeFragment : Fragment() {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //InitViews
@@ -63,21 +63,20 @@ class CarTypeFragment : Fragment() {
             //service list response
             viewModel.list.observe(viewLifecycleOwner) { it ->
                 //setData
+                carTypeAdapter.differ.submitList(null)//added because duplicate from search
                 carTypeAdapter.differ.submitList(it)
                 //init recycler Manufacturers
-                recyclerCarTypes.apply {
-                    adapter = carTypeAdapter
-                }
-                //click
-                carTypeAdapter.setOmItemClickListener { pair ->
-                    val direction =
-                        CarTypeFragmentDirections.actionCarTypeFragmentToBuiltDateFragment(
-                            mnfKey,
-                            mnfName,
-                            pair.first
-                        )
-                    findNavController().navigate(direction)
-                }
+                recyclerCarTypes.adapter = carTypeAdapter
+            }
+            //click
+            carTypeAdapter.setOmItemClickListener { pair ->
+                val direction =
+                    CarTypeFragmentDirections.actionCarTypeFragmentToBuiltDateFragment(
+                        mnfKey,
+                        mnfName,
+                        pair.first
+                    )
+                findNavController().navigate(direction)
             }
             //Empty History
             viewModel.emptyList.observe(viewLifecycleOwner) {
