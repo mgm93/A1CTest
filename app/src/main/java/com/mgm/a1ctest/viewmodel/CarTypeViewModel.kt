@@ -46,6 +46,7 @@ class CarTypeViewModel @Inject constructor(private val repository: Repository) :
             }
         }
         if (!schList.isNullOrEmpty()) {
+            emptyList.postValue(false)
             if (schList.size == mainList?.size) {
                 list.postValue(mainList)
             }
