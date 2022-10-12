@@ -2,7 +2,6 @@ package com.mgm.a1ctest.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.mgm.a1ctest.R
@@ -13,6 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     //Binding
     private lateinit var binding: ActivityMainBinding
+
     //Navigation
     private lateinit var navController: NavController
 
@@ -30,6 +30,13 @@ class MainActivity : AppCompatActivity() {
     //Handle back
     override fun onNavigateUp(): Boolean {
         return navController.navigateUp() || super.onNavigateUp()
+    }
+
+    override fun onBackPressed() {
+        if (navController.currentDestination?.id == R.id.manufacturerFragment || navController.currentDestination?.id == R.id.splashFragment) {
+            finish()
+        } else
+            super.onBackPressed()
     }
 
 }
