@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.mgm.a1ctest.R
-import com.mgm.a1ctest.databinding.ItemManufacturerBinding
+import com.mgm.a1ctest.databinding.ItemBuiltDateBinding
 import javax.inject.Inject
 
 /**
@@ -17,14 +17,14 @@ import javax.inject.Inject
  */
 class BuiltDateAdapter @Inject constructor(): RecyclerView.Adapter<BuiltDateAdapter.ViewHolder>() {
     //Binding
-    private lateinit var binding : ItemManufacturerBinding
+    private lateinit var binding : ItemBuiltDateBinding
     private lateinit var context : Context
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): BuiltDateAdapter.ViewHolder {
-        binding = ItemManufacturerBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        binding = ItemBuiltDateBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         context = parent.context
         return ViewHolder()
     }

@@ -12,9 +12,10 @@
     <color name="chineseBlackAlpha">#C80E0F14</color>
     <color name="scarlet">#f81633</color>
     <color name="raisinBlack">#1d1d27</color>
-    <color name="crayola">#feaa2e</color>
     <color name="philippineSilver">#B3B3B3</color>
     <color name="philippineSilverAlpha">#94B3B3B3</color>
     <color name="gunmetal">#2C2E43</color>
-    <color name="base">#3C1EAD</color>
+    <color name="crayola">#feaa2e</color>
+    <color name="phosphor_yellow">#FDD835</color>
+    <color name="phosphor_green">#AED581</color>
 </resources>
