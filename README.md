@@ -4,6 +4,11 @@ A1CTest
 Hello every one
 
 In this application I used modern development tools and libraries via #MVVM and 100% #Koltin.
+
+
+https://user-images.githubusercontent.com/15521116/195427434-98e4b153-7120-4c87-a43b-3ab9cf2c07d6.mp4
+
+
 # Summary
 Choose Manufacturer list and select type and see built date of them
 # What's this
@@ -25,4 +30,8 @@ you can update screen by click on each history Item or Delete it by cross icon
 - [Dagger-hilt](https://dagger.dev/hilt/)
 - [Paging 3](https://developer.android.com/topic/libraries/architecture/paging/v3-overview)
 - [Coil](https://coil-kt.github.io/coil/)
+
+# How to build
+ clone repository and import it in android studio  :D
+
 
